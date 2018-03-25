@@ -1,6 +1,6 @@
 class Tank : Game{
 public:
-    Tank(int,int,bool);
+    Tank(int,int);
     int x;
     int y;
 	void setDirection(int);
@@ -9,7 +9,6 @@ public:
 	void printSpace();
 	void del();
 	int mover();
-	bool multibullet;
 	bool isEnemy;
 	void setInGamefield(int x,int y, bool isSet);
 	void fire();
@@ -24,7 +23,7 @@ private:
 
 void Tank::setInGamefield(int x,int y, bool isSet)
 {
- int ttt;
+   int ttt;
     if (isEnemy) ttt=OBJECT_ENEMY_TANK; else ttt=OBJECT_OUR_TANK ;
     if (!isSet) ttt=0;
     for(int tempXx=x ; tempXx<=x+2 ; tempXx++)
@@ -32,7 +31,7 @@ void Tank::setInGamefield(int x,int y, bool isSet)
       gameField->setCoords(tempXx,tempYy,ttt, this);
 };
 
-Tank::Tank(int x, int y, bool multibullet) {
+Tank::Tank(int x, int y) {
    this->x = x;
    this->y = y;
    this->direction = MOVE_UP;
@@ -46,7 +45,6 @@ int Tank::mover(){
    int newDirection=oldDirection;
 
    bool tempFl=false;
-   int tempRet=0; int tempRetT=0;
 
 
    if (newDirection==oldDirection)
@@ -66,43 +64,35 @@ int Tank::mover(){
 
      if (newDirection == MOVE_LEFT){
         for(int tempYy=newY ; tempYy<=newY+2 ; tempYy++)
-          if ( (tempRetT=gameField->checkCoords(newX,tempYy)) > 0 ) tempFl=true;
+          if ( (gameField->checkCoords(newX,tempYy)) > 0 ) tempFl=true;
         if (tempFl) {
                 newX=oldX;
-                if ( (tempRetT>tempRet) && !( (tempRetT==OBJECT_ENEMY_BULLET) &&(isEnemy==true) ) && !( (tempRetT==OBJECT_OUR_BULLET) &&(isEnemy==false) ))
-                    tempRet=tempRetT;
-                   }
+                     }
      };
 
      if (newDirection == MOVE_RIGHT){
         for(int tempYy=newY ; tempYy<=newY+2 ; tempYy++)
-          if ( tempRetT=gameField->checkCoords(newX+3,tempYy) > 0 ) tempFl=true;
+          if ( gameField->checkCoords(newX+3,tempYy) > 0 ) tempFl=true;
         if (tempFl) {
                 newX=oldX;
-                if ( (tempRetT>tempRet) && !( (tempRetT==OBJECT_ENEMY_BULLET) &&(isEnemy==true) ) && !( (tempRetT==OBJECT_OUR_BULLET) &&(isEnemy==false) ))
-                   tempRet=tempRetT;
                    }
         }
 
 
      if (newDirection == MOVE_UP){
         for(int tempXx=newX ; tempXx<=newX+2 ; tempXx++)
-          if ( tempRetT=gameField->checkCoords(tempXx,newY) > 0 ) tempFl=true;
+          if ( gameField->checkCoords(tempXx,newY) > 0 ) tempFl=true;
         if (tempFl) {
             newY=oldY;
-                   if ( (tempRetT>tempRet) && !( (tempRetT==OBJECT_ENEMY_BULLET) &&(isEnemy==true) ) && !( (tempRetT==OBJECT_OUR_BULLET) &&(isEnemy==false) ))
-                   tempRet=tempRetT;
-        }
+                   }
      };
 
      if (newDirection == MOVE_DOWN){
         for(int tempXx=newX ; tempXx<=newX+2 ; tempXx++)
-          if ( tempRetT=gameField->checkCoords(tempXx,newY+3) > 0 ) tempFl=true;
+          if ( gameField->checkCoords(tempXx,newY+3) > 0 ) tempFl=true;
         if (tempFl) {
             newY=oldY;
-                   if ( (tempRetT>tempRet) && !( (tempRetT==OBJECT_ENEMY_BULLET) &&(isEnemy==true) ) && !( (tempRetT==OBJECT_OUR_BULLET) &&(isEnemy==false) ))
-                   tempRet=tempRetT;
-        }
+                    }
      };
 
 
@@ -118,8 +108,7 @@ int Tank::mover(){
            print();
        };//move
 
-   return(tempRet);
-}
+   }
 
 void Tank::printSpace() {
    gotoxy(x, y); printf("   ");
@@ -202,7 +191,7 @@ int tempX; int tempY;
    }
 
 
-          if ( gameField->checkCoords(tempX,tempY) <1 ){
+          if ( (gameField->checkCoords(tempX,tempY) <1) && (tempX>(LIMIT_LEFT+1)) && (tempX<(LIMIT_RIGHT-1)) && (tempY>(LIMIT_UP+1)) && (tempY<(LIMIT_DOWN-1)) ){
           Bullet* bulletT = new Bullet(tempX,tempY,direction,isEnemy);
           vectorOfBullet.push_back(bulletT);
           bulletT->print();
@@ -254,14 +243,13 @@ void Tank::animateDie()
 void Tank::del()
 {
 printSpace();
-setInGamefield(x,y,false);
-gameField->delRefCoords( this);
+this->setInGamefield(x,y,false);
 }
 
 class EnemyTank : Tank{
 public:
-	EnemyTank(int x,int y,bool multibullet)
-	:Tank(x,y,multibullet){
+	EnemyTank(int x,int y)
+	:Tank(x,y){
     this->isEnemy=true;
     setInGamefield(x,y, true);
     };
@@ -269,11 +257,15 @@ public:
 
 class OurTank : Tank{
 public:
-	OurTank(int x,int y,bool multibullet)
-	:Tank(x,y,multibullet){
+	OurTank(int x,int y)
+	:Tank(x,y){
     this->isEnemy=false;
+    kills=0;
+    lives=MAX_LIVES;
     setInGamefield(x,y, true);
     };
+    int kills;
+    int lives;
 };
 
 

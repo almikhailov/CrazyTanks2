@@ -33,29 +33,31 @@ xy Bullet::mover(){
    int oldY=this->y;
    int newX=oldX; int newY=oldY;
    int newDirection=this->direction;
-
+   int tempRetT=0;int tempRet=0;
+   xy xytemp;
 
      if (newDirection == MOVE_LEFT)
-       if (newX > LIMIT_LEFT + 2) newX--; else del();
+       if (newX > LIMIT_LEFT + 2) newX--; else tempRet=OBJECT_BORDER;
 
      if (newDirection == MOVE_RIGHT)
-       if ((newX + 2) < LIMIT_RIGHT - 1) newX++;  else del();
+       if ((newX + 2) < LIMIT_RIGHT - 1) newX++;  else tempRet=OBJECT_BORDER;
 
      if (newDirection == MOVE_DOWN)
-       if ((newY + 2) < LIMIT_DOWN - 1) newY++;  else del();
+       if ((newY + 2) < LIMIT_DOWN - 1) newY++;  else tempRet=OBJECT_BORDER;
 
      if (newDirection == MOVE_UP)
-       if (newY > LIMIT_UP + 1) newY--;  else del();
+       if (newY > LIMIT_UP + 1) newY--;  else tempRet=OBJECT_BORDER;
 
-       int tempRetT=0;int tempRet=0;
+xytemp.x=newX;
+xytemp.y=newY;
+
        if ( (tempRetT=gameField->checkCoords(newX,newY)) > 0 ) {
                 newX=oldX; newY=oldY;
-                if ( (tempRetT) && !( (tempRetT==OBJECT_ENEMY_TANK) &&(isEnemy==true) ) && !( (tempRetT==OBJECT_OUR_TANK) &&(isEnemy==false) ) )
+                if ( (tempRetT>tempRet)  ) //&& !( (tempRetT==OBJECT_ENEMY_TANK) &&(isEnemy==true) ) && !( (tempRetT==OBJECT_OUR_TANK) &&(isEnemy==false) )
                     tempRet=tempRetT;
                    }
 
-
-
+xytemp.ret=tempRet;
 
    if ( (newX!=oldX)||(newY!=oldY) )
        {//move
@@ -65,10 +67,8 @@ xy Bullet::mover(){
            setInGamefield(newX,newY, true);
            print();
        };//move
-xy xytemp;
-xytemp.x=newX;
-xytemp.y=newY;
-xytemp.ret=tempRet;
+
+
 return(xytemp);
 }
 

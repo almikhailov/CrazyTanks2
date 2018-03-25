@@ -20,12 +20,15 @@
 
 #define MAX_LIVES 3
 #define MAX_BULLETS 100
+#define ENEMY_TANKS 7
+#define WALL_HITS 2
+
 #define CHARACTER_BULLET '*'
 
-#define CHARACTER_TANK 219
-#define CHARACTER_ENEMY 178
+#define CHARACTER_ENEMY 177
 
-#define CHAR_WALL 254
+#define CHAR_WALL 178
+#define CHAR_GOLD 254
 
 #define OBJECT_NULL 0
 #define OBJECT_ORD_BRICK 1
@@ -34,6 +37,7 @@
 #define OBJECT_ENEMY_TANK 4
 #define OBJECT_OUR_BULLET 5
 #define OBJECT_ENEMY_BULLET 6
+#define OBJECT_BORDER 7
 
 #define SLEEP_TIME 50
 
