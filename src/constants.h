@@ -15,7 +15,7 @@
 // BORDER SETTINGS
 #define LIMIT_UP 1
 #define LIMIT_DOWN 29
-#define LIMIT_RIGHT 119
+#define LIMIT_RIGHT 116
 #define LIMIT_LEFT 1
 
 #define MAX_LIVES 3

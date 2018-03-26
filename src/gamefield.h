@@ -7,8 +7,8 @@ public:
    Game* getRefCoords(int ,int);
    void setCoords(int,int,int,Game*);
 private:
-   int gameFieldArrOfType[LIMIT_RIGHT-LIMIT_LEFT+1][LIMIT_DOWN-LIMIT_UP+1]={};
-   Game* gameFieldArrOfRef[LIMIT_RIGHT-LIMIT_LEFT+1][LIMIT_DOWN-LIMIT_UP+1]={};
+   int gameFieldArrOfType[LIMIT_RIGHT-LIMIT_LEFT+1][LIMIT_DOWN-LIMIT_UP+1];
+   Game* gameFieldArrOfRef[LIMIT_RIGHT-LIMIT_LEFT+1][LIMIT_DOWN-LIMIT_UP+1];
 };
 
 GameField::GameField() {  };

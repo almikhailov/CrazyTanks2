@@ -76,6 +76,8 @@ int main()
 {
 srand(time(NULL));
 
+rlutil::cls();
+
 paint_borders();
 
 int tempX;
@@ -131,7 +133,7 @@ for (int tempI=1 ; tempI<=20 ; tempI++){
    OrdinaryBrick* brickT = new OrdinaryBrick(tempX,tempY);
    ((Brick *)brickT)->print();
 
-   bool xyflag = rand() % 2;
+   int xyflag = rand() % 2;
    for (int tempII=1 ; tempII<=(rand() % 10 + 1) ; tempII++){
    if ( ((tempX+(xyflag*tempII))>(LIMIT_RIGHT-2)) ||   ((tempY+(1-xyflag)*tempII)> (LIMIT_DOWN-5)) ) break;
    if (gameField->checkCoords(tempX+(xyflag*tempII),tempY+(1-xyflag)*tempII)>0) break;

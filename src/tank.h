@@ -8,7 +8,7 @@ public:
 	void print();
 	void printSpace();
 	void del();
-	int mover();
+	void mover();
 	bool isEnemy;
 	void setInGamefield(int x,int y, bool isSet);
 	void fire();
@@ -37,7 +37,7 @@ Tank::Tank(int x, int y) {
    this->direction = MOVE_UP;
    }
 
-int Tank::mover(){
+void Tank::mover(){
    int oldX=this->x;
    int oldY=this->y;
    int newX=oldX; int newY=oldY;
